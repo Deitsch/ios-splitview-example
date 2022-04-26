@@ -8,20 +8,13 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet private weak var label: UILabel!
+    
+    var labelText: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let label = UITextField()
-//        label.text = "some text"
-//        view.addSubview(label)
-//        label.centerInSuperView()
-    }
-}
-
-extension UIView {
-    func centerInSuperView() {
-        guard let superView = superview else { return }
-        centerXAnchor.constraint(equalTo: superView.centerXAnchor).isActive = true
-        centerYAnchor.constraint(equalTo: superView.centerYAnchor).isActive = true
+        label.text = labelText
     }
 }
 
@@ -36,5 +29,11 @@ class TableViewController: UITableViewController {
         let cell = UITableViewCell()
         cell.textLabel?.text = data[indexPath.row]
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        vc.labelText = data[indexPath.row]
+        splitViewController?.showDetailViewController(vc, sender: nil)
     }
 }
