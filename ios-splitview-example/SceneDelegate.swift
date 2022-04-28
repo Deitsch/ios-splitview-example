@@ -18,21 +18,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let ws = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: ws)
-        
-        
-        let splitVC = UISplitViewController(style: .doubleColumn)
-        splitVC.preferredDisplayMode = .oneBesideSecondary
-        splitVC.preferredSplitBehavior = .tile
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabVC = UITabBarController()
+
+        let vc0 = UISplitViewController(style: .doubleColumn)
+        vc0.tabBarItem = UITabBarItem(title: "split", image: UIImage(systemName: "square.and.arrow.up"), tag: 0)
+        vc0.preferredDisplayMode = .oneBesideSecondary
+        vc0.preferredSplitBehavior = .tile
         
-        let vc = storyboard.instantiateViewController(withIdentifier: "ViewController")
+        let vc1 = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        vc1.labelText = "placeholder"
+        vc1.tabBarItem = UITabBarItem(title: "split", image: UIImage(systemName: "pencil.circle"), tag: 1)
+        
+        tabVC.viewControllers = [vc0, vc1]
+        
         let tvc = TableViewController()
-        splitVC.setViewController(tvc, for: .primary)
-        splitVC.setViewController(vc, for: .secondary)
+        vc0.setViewController(tvc, for: .primary)
         
-        
-        window.rootViewController = splitVC
+        window.rootViewController = vc0
         self.window = window
         window.makeKeyAndVisible()
     }

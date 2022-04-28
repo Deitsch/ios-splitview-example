@@ -8,18 +8,23 @@
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet private weak var label: UILabel!
+    @IBOutlet private weak var label: UILabel?
     
-    var labelText: String?
+    var labelText: String? {
+        didSet {
+            label?.text = labelText
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        label.text = labelText
+        label?.text = labelText
     }
 }
 
 class TableViewController: UITableViewController {
     let data = ["Simon", "Martin", "David"]
+    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         data.count
@@ -32,7 +37,6 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
         vc.labelText = data[indexPath.row]
         splitViewController?.showDetailViewController(vc, sender: nil)
     }
