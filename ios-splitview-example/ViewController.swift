@@ -38,6 +38,8 @@ class TableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         vc.labelText = data[indexPath.row]
-        splitViewController?.showDetailViewController(vc, sender: nil)
+        splitViewController?.setViewController(vc, for: .secondary)
+//        splitViewController?.showDetailViewController(vc, sender: nil)
+        splitViewController?.show(.secondary)
     }
 }
